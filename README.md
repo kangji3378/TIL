@@ -16,5 +16,4 @@ This is a normal paragraph:
 end code block.
 
 이미지
-![Alt text](/path/to/img.jpg)
-![Alt text](/path/to/img.jpg "Optional title")
+<img src="img/1.jpg" width="40%" height="30%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
