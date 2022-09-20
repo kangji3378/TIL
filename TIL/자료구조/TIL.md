@@ -29,3 +29,6 @@
         None 인지 확인 할 때는 is None을 써야한다(if not 으로 할 시 안잡힌다)
         Self Referential 
         
+# 2022-09-20
+    
+    
