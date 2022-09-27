@@ -30,5 +30,10 @@
         Self Referential 
         
 # 2022-09-20
+    sparse matrix
+# 2022-09-22
+    polynomial
+# 2022-09-27
+    stack and queue
     
     
