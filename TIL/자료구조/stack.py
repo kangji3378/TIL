@@ -52,23 +52,36 @@ class Stack:
             pos += 1
     def __str__(self):
         return str(self.arr)
-N = 4
-stack = Stack(N)
-print("Length:", len(stack))
-print("Is Empty:", stack.is_empty())
-print("Push from 1 to", N)
-for i in range(1, N + 1):
-    print("Push:", i)
-    stack.push(i)
-    print("Stack:", stack)
-    print("Peek:", stack.peek())
-print("Is Empty:", stack.is_empty())
-for i in stack:
-    print("Element:", i)
-print()
-for i in range(N):
-    print("Peek and Pop: ", stack.peek())
-    stack.pop()
-    print("Stack:", stack)
-print("Length:", len(stack))
-print("Is Empty:", stack.is_empty())
+class Postfix:
+    OPS = "+", "-", "*", "/"
+    def __init__(self, expr):
+        self.expr = expr
+    def evaluate(self):
+        stack = Stack(len(self.expr))
+        ret = 0
+        for i in self.expr.split():
+            if i in postfix.OPS:
+                a=stack.pop()
+                b=stack.pop()
+                ret=self.cal(a,b,i)
+            else:
+                stack.push(i)
+
+        return ret
+    def cal(self, tok_1, tok_2, op):
+        if op == "+":
+            return tok_1 + tok_2
+        if op == "-":
+            return tok_1 - tok_2
+        if op == "*":
+            return tok_1 * tok_2
+        if op == "/":
+            return tok_1 / tok_2
+        raise Exception("Unknown operator.")
+    def __str__(self):
+        return self.expr
+expr = "4 10 2 + * 7 -"
+postfix = Postfix(expr)
+print("Expression:", postfix)
+res = postfix.evaluate()
+print("Caculation:", res)
