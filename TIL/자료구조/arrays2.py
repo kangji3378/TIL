@@ -86,7 +86,6 @@ class MatrixSparse:
         self.cols = cols
         self.size = size
         self.sparse = sparse
-
     def build_matrix_sparse(self, mat):
         self.rows=len(mat)
         self.cols=len(mat[0])
@@ -115,6 +114,11 @@ class MatrixSparse:
             size=self.size,
             sparse=self.sparse
         )
+    def __str__(self):
+        s=""
+        for i in self.sparse:
+            s+=str(i)+"\n"
+        return s
 data = [
 [15, 0, 0, 22, 0, -15],
 [0, 11, 3, 0, 0, 0],
