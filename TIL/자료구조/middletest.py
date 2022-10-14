@@ -142,18 +142,18 @@
 # print(o)
 # print(o.search(43))
 # print(o.index(43))
-class Array:
-    CAPACITY=10
-    def __init__(self,capacity=CAPACITY):
-        self.items=[None]*capacity
-    def __len__(self):
-        return len(self.items)
-    def __str__(self):
-        return str(self.items)
-    def __getitem__(self,index):
-        return self.items[index]
-    def __setitem__(self,index,item):
-        self.items[index]=item
+# class Array:
+#     CAPACITY=10
+#     def __init__(self,capacity=CAPACITY):
+#         self.items=[None]*capacity
+#     def __len__(self):
+#         return len(self.items)
+#     def __str__(self):
+#         return str(self.items)
+#     def __getitem__(self,index):
+#         return self.items[index]
+#     def __setitem__(self,index,item):
+#         self.items[index]=item
 # class Stack:
 #     CAPACITY=10
 #     def __init__(self,capacity=CAPACITY):
@@ -399,13 +399,41 @@ class Postfix:
         return self.expr
 
 class Infix:
+    OPS1="+","-"
+    OPS2="*","/"
     def __init__(self, expr):
         (*self.expr,) = expr
     def translate_postfix(self):
         stack = Stack(len(self.expr))
         list_ = []
         for token in self.expr:
-            return "".join(list_)
+            if token in self.OPS1:
+                while stack:
+                    a=stack.peek()
+                    if a=="(":break
+                    list_.append(a)
+                    stack.pop()
+                stack.push(token)
+            elif token in self.OPS2:
+                while stack and stack.peek() in self.OPS2:
+                    a=stack.peek()
+                    stack.pop()
+                stack.push(token)
+            elif token=="(":
+                stack.push(token)
+            elif token==")":
+                while stack:
+                    a=stack.peek()
+                    stack.pop()
+                    if a=="(":
+                        break
+                    list_.append(a)
+            else:
+                list_.append(token)
+        while stack:
+            list_.append(stack.peek())
+            stack.pop()
+        return "".join(list_)
 if __name__ == "__main__":
     expr = "a*(b+c)*d"
     infix = Infix(expr)
