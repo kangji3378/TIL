@@ -61,12 +61,11 @@ class Infix:
     def translate_postfix(self):
         stack = Stack(len(self.expr))
         list_ = []
-        check_=1
         for token in self.expr:
             if token=='(':
                 stack.push(token)
             elif token in Infix.OPS2:
-                while stack and stack.peek() in Infix.OPS2:
+                while stack.peek() in Infix.OPS2:
                     list_.append(stack.peek())
                     stack.pop()
                 stack.push(token)
@@ -93,7 +92,7 @@ class Infix:
         return "".join(list_)
         
 if __name__ == "__main__":
-    expr = "a*(b+c)*d"
+    expr = "a+(b+c*d-e)*f"
     infix = Infix(expr)
     postfix = infix.translate_postfix()
     print(postfix)

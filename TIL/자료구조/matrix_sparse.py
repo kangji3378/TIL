@@ -8,7 +8,6 @@ class Term:
     def __repr__(self):
         return str(self)
 
-
 class MatrixSparse:
     def __init__(self, rows=0, cols=0, size=0, sparse = None):
         self.rows = rows
@@ -26,12 +25,7 @@ class MatrixSparse:
         ]
         self.size = len(self.sparse)
     def __str__(self):
-        result=""
-        for i in self.sparse:
-            result+=str(i)   
-            result+="\n"
-        result=result[:-1]
-        return f"{result}"
+        return "\n".join(str(v) for v in self.sparse)
     def transpose(self):
         if self.sparse is None:
             return

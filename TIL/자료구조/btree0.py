@@ -52,65 +52,44 @@ class Stack:
             pos += 1
     def __str__(self):
         return str(self.arr)
-
-class Tree:
-    def __init__(self):
-        self.root = None
-    def build(self, sexpr):
-        stack = Stack()
-        for token in sexpr:
-            if token==")":
-                pre_token=None
-                while stack:
-                    if stack.peek()=="(":
-                        stack.pop()
-                        break
-                    a=stack.peek()
-                    a.right_sibling=pre_token
-                    pre_token=a
-                    stack.pop()
-                if stack.peek():
-                    stack.peek().left_child=a
-                else:
-                    self.root=a
-            elif token=="(":
-                stack.push(token)
+class TreeNode:
+    def __init__(self, elem):
+        self.elem = elem
+        self.value = None # boolean value
+        self.left_child = self.right_child = None
+    def __repr__(self):
+        return str(self)
+    def __str__(self):
+        return f"{self.elem}"
+class BTreeBuilder:
+    @staticmethod
+    def build(sexpr):
+        stack_proc = Stack(len(sexpr))
+        stack_subtree = Stack(len(sexpr))
+        root = None
+        for expr in sexpr:
+            if expr != ")":
+                stack_proc.push(TreeNode(expr))
+                continue
+            while stack_proc.peek().elem != "(":
+                node = stack_proc.peek()
+                stack_proc.pop()
+                node = node if node.elem != "#" else None
+                stack_subtree.push(node)
+            stack_proc.pop()  # remove "(“
+            if stack_proc.is_empty():
+                root = stack_subtree.peek()
+                stack_subtree.pop()
             else:
-                stack.push(self.TreeNode(token))
-    class TreeNode:
-        def __init__(self, elem):
-            self.elem = elem
-            self.left_child = None
-            self.right_sibling = None
-        def __repr__(self):
-            return str(self)
-        def __str__(self):
-            return f"{self.elem}"
-sexpr = "( A )"
-sexpr = sexpr.split()
-tree = Tree()
-tree.build(sexpr)
-root = tree.root
-print(root)
-b = root.left_child
-print(b)
-e = b.left_child
-print(e)
-k = e.left_child
-print(k)
-l = k.right_sibling
-print(l)
-f = e.right_sibling
-print(f)
-c = b.right_sibling
-print(c)
-d = c.right_sibling
-print(d)
-g = c.left_child
-print(g)
-h = d.left_child
-print(h)
-i = h.right_sibling
-print(i)
-j = i.right_sibling
-print(j)
+                root = stack_proc.peek()
+                stack_proc.pop()
+            if stack_subtree.is_empty():
+                continue
+            root.left_child = stack_subtree.peek()
+            stack_subtree.pop()
+            root.right_child = stack_subtree.peek()
+            stack_subtree.pop()
+            stack_proc.push(root)
+        if not stack_proc.is_empty():
+            raise Exception("expression is wrong.")
+        return root

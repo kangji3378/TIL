@@ -133,8 +133,6 @@ class Queue:
     def dequeue(self):
         self.list_.delete_head()
     def peek(self):
-        if self.list_.head is None:
-            return None
         return self.list_.head
     def is_empty(self):
         if self.list_.head is None:
